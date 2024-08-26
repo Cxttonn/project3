@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
-import { useMessageStore } from '@/stores/message' // Correctly import the message store
+import { useMessageStore } from '@/stores/message'
 import EventService from '@/services/EventService'
 import { useRoute, useRouter } from 'vue-router'
 import { type Event } from '@/types'
 
 const route = useRoute()
 const router = useRouter()
-const messageStore = useMessageStore() // Correctly instantiate the message store
+const messageStore = useMessageStore()
 
 const allEvents = ref<Event[]>([])
 const events = ref<Event[]>([])
@@ -56,10 +56,8 @@ function submitComment() {
 
   comments.value.push(newComment)
 
-  // Trigger the flash message
   messageStore.updateMessage('Comment successfully posted!')
 
-  // Clear the comment fields
   commenterName.value = ''
   commentText.value = ''
 }
@@ -103,184 +101,97 @@ function changePage(newPage: number) {
 </script>
 
 <template>
-  <h1>Olympic Medal Table</h1>
+  <h1 class="text-3xl font-bold text-center mb-6">Olympic Medal Table</h1>
 
-  <table class="medal-table">
+  <div class="flex justify-center items-center mb-6">
+    <label for="page-size" class="mr-2">Country</label>
+    <select
+      id="page-size"
+      v-model="pageSize"
+      @change="updatePageSize(pageSize)"
+      class="border rounded px-2 py-1"
+    >
+      <option v-for="n in [5, 10, 15, 20, 25, 30]" :key="n" :value="n">{{ n }}</option>
+    </select>
+  </div>
+
+  <table class="min-w-full table-auto border-collapse mb-6">
     <thead>
-      <tr>
-        <th>Flag</th>
-        <th>
-          <div>
-            <label for="page-size">Country </label>
-            <select id="page-size" v-model="pageSize" @change="updatePageSize(pageSize)">
-              <option v-for="n in [5, 10, 15, 20, 25, 30]" :key="n" :value="n">{{ n }}</option>
-            </select>
-          </div>
-        </th>
-        <th>Gold</th>
-        <th>Silver</th>
-        <th>Bronze</th>
-        <th>Total Medals</th>
+      <tr class="bg-gray-100">
+        <th class="px-4 py-2 border text-center">Flag</th>
+        <th class="px-4 py-2 border text-center">Country</th>
+        <th class="px-4 py-2 border text-center">Gold</th>
+        <th class="px-4 py-2 border text-center">Silver</th>
+        <th class="px-4 py-2 border text-center">Bronze</th>
+        <th class="px-4 py-2 border text-center">Total Medals</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="event in events" :key="event.id">
-        <td><img :src="event.flag_url" alt="Flag" class="flag" /></td>
-        <td>
-          <RouterLink :to="{ name: 'layout-view', params: { id: event.id } }">
+      <tr v-for="event in events" :key="event.id" class="hover:bg-gray-50">
+        <td class="px-4 py-2 border text-center">
+  <img :src="event.flag_url" alt="Flag" class="w-12 h-auto mx-auto" />
+      </td>
+
+        <td class="px-4 py-2 border">
+          <RouterLink :to="{ name: 'layout-view', params: { id: event.id } }" class="text-blue-600 hover:underline">
             {{ event.name }}
           </RouterLink>
         </td>
-        <td>{{ event.gold_medals || event.medals_by_sport?.until_2024?.total?.gold || 0 }}</td>
-        <td>{{ event.silver_medals || event.medals_by_sport?.until_2024?.total?.silver || 0 }}</td>
-        <td>{{ event.bronze_medals || event.medals_by_sport?.until_2024?.total?.bronze || 0 }}</td>
-        <td>{{ event.total_medals }}</td>
+        <td class="px-4 py-2 border text-center">{{ event.gold_medals || event.medals_by_sport?.until_2024?.total?.gold || 0 }}</td>
+        <td class="px-4 py-2 border text-center">{{ event.silver_medals || event.medals_by_sport?.until_2024?.total?.silver || 0 }}</td>
+        <td class="px-4 py-2 border text-center">{{ event.bronze_medals || event.medals_by_sport?.until_2024?.total?.bronze || 0 }}</td>
+        <td class="px-4 py-2 border text-center">{{ event.total_medals }}</td>
       </tr>
     </tbody>
   </table>
 
-  <div class="comment-box">
-    <h3>Leave a Comment</h3>
-    <input v-model="commenterName" placeholder="Your name" />
-    <textarea v-model="commentText" placeholder="Your comment"></textarea>
-    <button @click="submitComment">Submit Comment</button>
+  <div class="comment-box max-w-xl mx-auto p-6 border border-gray-300 rounded-lg mb-6">
+    <h3 class="text-lg font-semibold mb-4">Leave a Comment</h3>
+    <input
+      v-model="commenterName"
+      placeholder="Your name"
+      class="w-full p-2 mb-4 border border-gray-300 rounded"
+    />
+    <textarea
+      v-model="commentText"
+      placeholder="Your comment"
+      class="w-full p-2 mb-4 border border-gray-300 rounded"
+    ></textarea>
+    <button
+      @click="submitComment"
+      class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+    >
+      Submit Comment
+    </button>
 
-    <ul class="comments-list">
-      <li v-for="(comment, index) in comments" :key="index">
+    <ul class="mt-6 space-y-4">
+      <li v-for="(comment, index) in comments" :key="index" class="bg-gray-100 p-4 rounded-lg">
         <strong>{{ comment.name }}</strong> ({{ comment.date }}): {{ comment.text }}
       </li>
     </ul>
   </div>
 
-  <div class="pagination" v-if="totalPages > 1">
+  <div v-if="totalPages > 1" class="flex justify-between items-center max-w-sm mx-auto mb-6">
     <RouterLink
       v-if="hasPrevPage"
       :to="{ name: 'event-list-view', query: { page: page - 1, pageSize: pageSize } }"
       @click.prevent="changePage(page - 1)"
-      rel="prev"
-      class="page-prev"
+      class="text-blue-600 hover:underline"
     >
-      &#60;
+      &#60; Previous
     </RouterLink>
-    <span class="current-page">Page {{ page }} of {{ totalPages }}</span>
+    <span class="font-semibold">Page {{ page }} of {{ totalPages }}</span>
     <RouterLink
       v-if="hasNextPage"
       :to="{ name: 'event-list-view', query: { page: page + 1, pageSize: pageSize } }"
       @click.prevent="changePage(page + 1)"
-      rel="next"
-      class="page-next"
+      class="text-blue-600 hover:underline"
     >
-      &#62;
+      Next &#62;
     </RouterLink>
   </div>
 
-  <div v-if="totalEvents === 0">
+  <div v-if="totalEvents === 0" class="text-center text-gray-500">
     <p>No countries available.</p>
   </div>
 </template>
-
-<style scoped>
-h1 {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.page-size-selector {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.page-size-selector label {
-  margin-right: 10px;
-}
-
-.medal-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 0 auto 20px;
-  text-align: left;
-}
-
-.medal-table th,
-.medal-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-.medal-table th {
-  background-color: #f2f2f2;
-}
-
-.flag {
-  width: 50px;
-  height: auto;
-}
-
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  width: 350px;
-  margin: 20px auto 0;
-  align-items: center;
-}
-
-.pagination .current-page {
-  font-weight: bold;
-  text-align: center;
-  flex: 1;
-}
-
-.pagination a {
-  text-decoration: none;
-  color: #2c3e50;
-}
-
-.page-prev {
-  text-align: left;
-}
-
-.page-next {
-  text-align: right;
-}
-
-.comment-box {
-  margin: 20px auto;
-  padding: 20px;
-  max-width: 600px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.comment-box input,
-.comment-box textarea {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-}
-
-.comment-box button {
-  padding: 10px 20px;
-  background-color: #42b983;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.comment-box button:hover {
-  background-color: #368f6e;
-}
-
-.comments-list {
-  list-style: none;
-  padding: 0;
-}
-
-.comments-list li {
-  margin-bottom: 10px;
-}
-</style>

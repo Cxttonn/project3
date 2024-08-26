@@ -1,79 +1,72 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
-import { type Event } from '@/types';
+import { defineProps } from 'vue'
+import { type Event } from '@/types'
 
-defineProps<{ event: Event }>();
+const props = defineProps<{ event: Event }>()
 </script>
 
 <template>
-  <div>
-    <h2>Medal Details for {{ event.name }}</h2>
+  <div class="p-4">
+    <h2 class="text-2xl font-bold mb-4">Medal Details for {{ event.name }}</h2>
 
     <!-- Until 2024 Medals -->
-    <h3>Until 2024</h3>
-    <table class="medal-table">
-      <thead>
-        <tr>
-          <th>Sport</th>
-          <th>Gold</th>
-          <th>Silver</th>
-          <th>Bronze</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="sport in event.medals_by_sport?.until_2024?.sports || []" :key="sport.name">
-          <td>{{ sport.name }}</td>
-          <td>{{ sport.gold }}</td>
-          <td>{{ sport.silver }}</td>
-          <td>{{ sport.bronze }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>Total Gold: {{ event.medals_by_sport?.until_2024?.total?.gold || 0 }}</p>
-    <p>Total Silver: {{ event.medals_by_sport?.until_2024?.total?.silver || 0 }}</p>
-    <p>Total Bronze: {{ event.medals_by_sport?.until_2024?.total?.bronze || 0 }}</p>
+    <h3 class="text-xl font-semibold mt-4 mb-2">Until 2024</h3>
+    <div class="mb-4">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="p-2 border border-gray-300">Sport</th>
+            <th class="p-2 border border-gray-300">Gold</th>
+            <th class="p-2 border border-gray-300">Silver</th>
+            <th class="p-2 border border-gray-300">Bronze</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="sport in event.medals_by_sport?.until_2024?.sports || []" :key="sport.name">
+            <td class="p-2 border border-gray-300">{{ sport.name }}</td>
+            <td class="p-2 border border-gray-300">{{ sport.gold }}</td>
+            <td class="p-2 border border-gray-300">{{ sport.silver }}</td>
+            <td class="p-2 border border-gray-300">{{ sport.bronze }}</td>
+          </tr>
+          <!-- Total Row -->
+          <tr class="font-semibold bg-gray-100">
+            <td class="p-2 border border-gray-300">Total</td>
+            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.until_2024?.total?.gold || 0 }}</td>
+            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.until_2024?.total?.silver || 0 }}</td>
+            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.until_2024?.total?.bronze || 0 }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <!-- In 2024 Medals -->
-    <h3>In 2024</h3>
-    <table class="medal-table">
-      <thead>
-        <tr>
-          <th>Sport</th>
-          <th>Gold</th>
-          <th>Silver</th>
-          <th>Bronze</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="sport in event.medals_by_sport?.in_2024?.sports || []" :key="sport.name">
-          <td>{{ sport.name }}</td>
-          <td>{{ sport.gold }}</td>
-          <td>{{ sport.silver }}</td>
-          <td>{{ sport.bronze }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <p>Total Gold: {{ event.medals_by_sport?.in_2024?.total?.gold || 0 }}</p>
-    <p>Total Silver: {{ event.medals_by_sport?.in_2024?.total?.silver || 0 }}</p>
-    <p>Total Bronze: {{ event.medals_by_sport?.in_2024?.total?.bronze || 0 }}</p>
+    <h3 class="text-xl font-semibold mt-4 mb-2">In 2024</h3>
+    <div class="mb-4">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="p-2 border border-gray-300">Sport</th>
+            <th class="p-2 border border-gray-300">Gold</th>
+            <th class="p-2 border border-gray-300">Silver</th>
+            <th class="p-2 border border-gray-300">Bronze</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="sport in event.medals_by_sport?.in_2024?.sports || []" :key="sport.name">
+            <td class="p-2 border border-gray-300">{{ sport.name }}</td>
+            <td class="p-2 border border-gray-300">{{ sport.gold }}</td>
+            <td class="p-2 border border-gray-300">{{ sport.silver }}</td>
+            <td class="p-2 border border-gray-300">{{ sport.bronze }}</td>
+          </tr>
+          <!-- Total Row -->
+          <tr class="font-semibold bg-gray-100">
+            <td class="p-2 border border-gray-300">Total</td>
+            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.in_2024?.total?.gold || 0 }}</td>
+            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.in_2024?.total?.silver || 0 }}</td>
+            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.in_2024?.total?.bronze || 0 }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
-
-<style scoped>
-.medal-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-}
-
-.medal-table th,
-.medal-table td {
-  padding: 8px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.medal-table th {
-  background-color: #f4f4f4;
-}
-</style>

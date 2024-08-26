@@ -1,62 +1,30 @@
 <script setup lang="ts">
-  import { defineProps } from 'vue';
-  import type { Event } from '@/types';
-  
-  const props = defineProps<{
-    event: Event | null;
-  }>();
+import { defineProps } from 'vue'
+import type { Event } from '@/types'
+
+const props = defineProps<{
+  event: Event | null
+}>()
 </script>
+
 <template>
-    <div class="passenger-detail" v-if="event">
-      <p>Id: {{ event._id }}</p>
-      <p>Name: {{ event.name }}</p>
-      <p>Trips: {{ event.trips }}</p>
-      <ul>
-        <li v-for="(airline, index) in event.airline" :key="index">
-          <router-link :to="{ name: 'airline-detail-view', params: { airlineId: airline._id } }">
-            <p>Airline: {{ airline.name }}</p>
-          </router-link>
-        </li>
-      </ul>
-    </div>
-  
-    <div v-else>
-      <p>Passenger not found or failed to load.</p>
-    </div>
-</template>  
+  <div class="text-left max-w-xs mx-auto" v-if="event">
+    <p class="mb-4">Id: {{ event._id }}</p>
+    <p class="mb-4">Name: {{ event.name }}</p>
+    <p class="mb-4">Trips: {{ event.trips }}</p>
+    <ul class="list-none p-0">
+      <li v-for="(airline, index) in event.airline" :key="index" class="mb-2">
+        <router-link
+          :to="{ name: 'airline-detail-view', params: { airlineId: airline._id } }"
+          class="text-black no-underline hover:underline"
+        >
+          <p>Airline: {{ airline.name }}</p>
+        </router-link>
+      </li>
+    </ul>
+  </div>
 
-  <style scoped>
-  .passenger-detail {
-    text-align: left;
-    max-width: 300px;
-    margin: 0 auto;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-  }
-  
-  p {
-    margin: 10px 0;
-  }
-  
-  a {
-    color: black; 
-    text-decoration: none; 
-  }
-  
-  a:hover {
-    text-decoration: underline; 
-  }
-
-  router-link {
-    color: black;
-    text-decoration: none; 
-  }
-  </style>
-  
+  <div v-else>
+    <p class="text-center">Passenger not found or failed to load.</p>
+  </div>
+</template>

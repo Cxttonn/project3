@@ -1,30 +1,18 @@
 <script setup lang="ts">
-  import { defineProps } from 'vue';
-  import type { Student } from '@/types';
-  
-  defineProps<{
-    student: Student
-  }>();
+import { defineProps } from 'vue'
+import type { Student } from '@/types'
+
+const props = defineProps<{
+  student: Student
+}>()
 </script>
 
 <template>
-    <div class="student-card">
-      <h2>{{ student.name }} {{ student.surname }}</h2>
-      <p>GPA : {{ student.gpa }}</p>
-    </div>
+  <div
+    class="p-5 w-64 border border-gray-800 mb-4 text-center
+           transition-transform duration-300 transform hover:scale-105 hover:shadow-lg"
+  >
+    <h2 class="text-xl font-semibold mb-2">{{ student.name }} {{ student.surname }}</h2>
+    <p class="text-lg">GPA: {{ student.gpa }}</p>
+  </div>
 </template>
-
-  <style scoped>
-  .student-card {
-    padding: 20px;
-    width: 250px;
-    border: 1px solid #39495c;
-    margin-bottom: 18px;
-    text-align: center;
-  }
-  .student-card:hover {
-    transform: scale(1.01);
-    box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.2);
-  }
-  </style>
-  

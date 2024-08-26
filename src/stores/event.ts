@@ -1,21 +1,21 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { type Event } from '@/type';
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { type Event } from '@/type'
 
 export const useEventStore = defineStore('event', () => {
-  const events = ref<Event[]>([]);
-  const currentEvent = ref<Event | null>(null);
+  const events = ref<Event[]>([])
+  const currentEvent = ref<Event | null>(null)
 
   function setEvents(newEvents: Event[]) {
-    events.value = newEvents;
+    events.value = newEvents
   }
 
   function setEvent(event: Event) {
-    currentEvent.value = event;
+    currentEvent.value = event
   }
 
   function getEventById(id: string): Event | undefined {
-    return events.value.find(event => event.id === id);
+    return events.value.find((event) => event.id === id)
   }
 
   return {
@@ -23,6 +23,6 @@ export const useEventStore = defineStore('event', () => {
     currentEvent,
     setEvents,
     setEvent,
-    getEventById,
-  };
-});
+    getEventById
+  }
+})
