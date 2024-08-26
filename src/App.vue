@@ -31,7 +31,10 @@ watch(message, (newValue) => {
       </div>
       <div class="p-8">
         <nav>
-          <RouterLink :to="{ name: 'event-list-view' }" class="font-bold text-gray-800 hover:text-green-500 transition">
+          <RouterLink
+            :to="{ name: 'event-list-view' }"
+            class="font-bold text-gray-800 hover:text-green-500 transition"
+          >
             Home
           </RouterLink>
         </nav>

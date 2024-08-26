@@ -31,9 +31,15 @@ const props = defineProps<{ event: Event }>()
           <!-- Total Row -->
           <tr class="font-semibold bg-gray-100">
             <td class="p-2 border border-gray-300">Total</td>
-            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.until_2024?.total?.gold || 0 }}</td>
-            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.until_2024?.total?.silver || 0 }}</td>
-            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.until_2024?.total?.bronze || 0 }}</td>
+            <td class="p-2 border border-gray-300">
+              {{ event.medals_by_sport?.until_2024?.total?.gold || 0 }}
+            </td>
+            <td class="p-2 border border-gray-300">
+              {{ event.medals_by_sport?.until_2024?.total?.silver || 0 }}
+            </td>
+            <td class="p-2 border border-gray-300">
+              {{ event.medals_by_sport?.until_2024?.total?.bronze || 0 }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -61,9 +67,15 @@ const props = defineProps<{ event: Event }>()
           <!-- Total Row -->
           <tr class="font-semibold bg-gray-100">
             <td class="p-2 border border-gray-300">Total</td>
-            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.in_2024?.total?.gold || 0 }}</td>
-            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.in_2024?.total?.silver || 0 }}</td>
-            <td class="p-2 border border-gray-300">{{ event.medals_by_sport?.in_2024?.total?.bronze || 0 }}</td>
+            <td class="p-2 border border-gray-300">
+              {{ event.medals_by_sport?.in_2024?.total?.gold || 0 }}
+            </td>
+            <td class="p-2 border border-gray-300">
+              {{ event.medals_by_sport?.in_2024?.total?.silver || 0 }}
+            </td>
+            <td class="p-2 border border-gray-300">
+              {{ event.medals_by_sport?.in_2024?.total?.bronze || 0 }}
+            </td>
           </tr>
         </tbody>
       </table>

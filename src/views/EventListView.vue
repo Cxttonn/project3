@@ -129,17 +129,26 @@ function changePage(newPage: number) {
     <tbody>
       <tr v-for="event in events" :key="event.id" class="hover:bg-gray-50">
         <td class="px-4 py-2 border text-center">
-  <img :src="event.flag_url" alt="Flag" class="w-12 h-auto mx-auto" />
-      </td>
+          <img :src="event.flag_url" alt="Flag" class="w-12 h-auto mx-auto" />
+        </td>
 
         <td class="px-4 py-2 border">
-          <RouterLink :to="{ name: 'layout-view', params: { id: event.id } }" class="text-blue-600 hover:underline">
+          <RouterLink
+            :to="{ name: 'layout-view', params: { id: event.id } }"
+            class="text-blue-600 hover:underline"
+          >
             {{ event.name }}
           </RouterLink>
         </td>
-        <td class="px-4 py-2 border text-center">{{ event.gold_medals || event.medals_by_sport?.until_2024?.total?.gold || 0 }}</td>
-        <td class="px-4 py-2 border text-center">{{ event.silver_medals || event.medals_by_sport?.until_2024?.total?.silver || 0 }}</td>
-        <td class="px-4 py-2 border text-center">{{ event.bronze_medals || event.medals_by_sport?.until_2024?.total?.bronze || 0 }}</td>
+        <td class="px-4 py-2 border text-center">
+          {{ event.gold_medals || event.medals_by_sport?.until_2024?.total?.gold || 0 }}
+        </td>
+        <td class="px-4 py-2 border text-center">
+          {{ event.silver_medals || event.medals_by_sport?.until_2024?.total?.silver || 0 }}
+        </td>
+        <td class="px-4 py-2 border text-center">
+          {{ event.bronze_medals || event.medals_by_sport?.until_2024?.total?.bronze || 0 }}
+        </td>
         <td class="px-4 py-2 border text-center">{{ event.total_medals }}</td>
       </tr>
     </tbody>

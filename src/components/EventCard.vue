@@ -10,8 +10,7 @@ const props = defineProps<{
 <template>
   <div v-if="event && event.id" class="flex justify-center w-full">
     <div
-      class="p-5 w-64 cursor-pointer border border-gray-800 mb-4 text-center
-             transition-transform duration-300 transform hover:scale-105 hover:shadow-lg"
+      class="p-5 w-64 cursor-pointer border border-gray-800 mb-4 text-center transition-transform duration-300 transform hover:scale-105 hover:shadow-lg"
     >
       <img :src="event.flag_url" alt="Flag" class="w-full h-auto mb-2" />
       <h2 class="text-xl font-semibold mb-2">{{ event.name }}</h2>
