@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import { type Event } from '@/types'
+import { type Event } from '@/type'
 
 const props = defineProps<{ event: Event }>()
 </script>

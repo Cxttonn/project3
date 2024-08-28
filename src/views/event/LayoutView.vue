@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { useEventStore } from '@/stores/event'
 import { useMessageStore } from '@/stores/message'
-import type { Event } from '@/types'
+import type { Event } from '@/type'
 
 const route = useRoute()
 const countryId = route.params.id as string
@@ -56,13 +56,13 @@ onMounted(async () => {
       <nav class="mb-4">
         <RouterLink
           :to="{ name: 'country-detail-view', params: { id: event.id } }"
-          class="text-blue-600 hover:underline mr-4"
+          class="text-600 hover:underline mr-4"
           >Country Detail</RouterLink
         >
         |
         <RouterLink
           :to="{ name: 'medal-detail-view', params: { id: event.id } }"
-          class="text-blue-600 hover:underline ml-4"
+          class="text-600 hover:underline ml-4"
           >Medal Detail</RouterLink
         >
       </nav>

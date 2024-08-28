@@ -3,7 +3,7 @@ import { ref, onMounted, computed, watch } from 'vue'
 import { useMessageStore } from '@/stores/message'
 import EventService from '@/services/EventService'
 import { useRoute, useRouter } from 'vue-router'
-import { type Event } from '@/types'
+import { type Event } from '@/type'
 
 const route = useRoute()
 const router = useRouter()
@@ -103,23 +103,21 @@ function changePage(newPage: number) {
 <template>
   <h1 class="text-3xl font-bold text-center mb-6">Olympic Medal Table</h1>
 
-  <div class="flex justify-center items-center mb-6">
-    <label for="page-size" class="mr-2">Country</label>
-    <select
-      id="page-size"
-      v-model="pageSize"
-      @change="updatePageSize(pageSize)"
-      class="border rounded px-2 py-1"
-    >
-      <option v-for="n in [5, 10, 15, 20, 25, 30]" :key="n" :value="n">{{ n }}</option>
-    </select>
-  </div>
 
   <table class="min-w-full table-auto border-collapse mb-6">
     <thead>
       <tr class="bg-gray-100">
         <th class="px-4 py-2 border text-center">Flag</th>
-        <th class="px-4 py-2 border text-center">Country</th>
+        <th class="px-4 py-2 border text-center">Country  
+          <select
+      id="page-size"
+      v-model="pageSize"
+      @change="updatePageSize(pageSize)"
+      class="border rounded px-2 py-1"
+       >
+      <option v-for="n in [5, 10, 15, 20, 25, 30]" :key="n" :value="n">{{ n }}</option>
+      </select>
+        </th>
         <th class="px-4 py-2 border text-center">Gold</th>
         <th class="px-4 py-2 border text-center">Silver</th>
         <th class="px-4 py-2 border text-center">Bronze</th>
@@ -135,7 +133,7 @@ function changePage(newPage: number) {
         <td class="px-4 py-2 border">
           <RouterLink
             :to="{ name: 'layout-view', params: { id: event.id } }"
-            class="text-blue-600 hover:underline"
+            class="text-600 hover:underline"
           >
             {{ event.name }}
           </RouterLink>
@@ -185,7 +183,7 @@ function changePage(newPage: number) {
       v-if="hasPrevPage"
       :to="{ name: 'event-list-view', query: { page: page - 1, pageSize: pageSize } }"
       @click.prevent="changePage(page - 1)"
-      class="text-blue-600 hover:underline"
+      class="text-600 hover:underline"
     >
       &#60; Previous
     </RouterLink>
@@ -194,7 +192,7 @@ function changePage(newPage: number) {
       v-if="hasNextPage"
       :to="{ name: 'event-list-view', query: { page: page + 1, pageSize: pageSize } }"
       @click.prevent="changePage(page + 1)"
-      class="text-blue-600 hover:underline"
+      class="text-600 hover:underline"
     >
       Next &#62;
     </RouterLink>
