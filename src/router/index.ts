@@ -8,6 +8,10 @@ import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import nProgress from 'nprogress'
 import EventService from '@/services/EventService'
 import { useEventStore } from '@/stores/event'
+import { ref } from 'vue'
+import { useMessageStore } from '@/stores/message'
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -89,3 +93,4 @@ router.afterEach(() => {
 })
 
 export default router
+

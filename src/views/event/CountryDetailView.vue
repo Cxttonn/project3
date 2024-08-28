@@ -10,7 +10,7 @@ const error = ref(null)
 onMounted(async () => {
   try {
     const id = route.params.id as string
-    country.value = await EventService.getCountryDetails(id)
+    country.value = await EventService.getCountry(id)
   } catch (err) {
     error.value = err.message
   }

@@ -34,20 +34,7 @@ async function submitComment() {
   commentText.value = ''
 }
 
-onMounted(async () => {
-  if (!event.value) {
-    try {
-      const fetchedEvent = await eventStore.getEventById(countryId)
-      if (fetchedEvent) {
-        eventStore.setEvent(fetchedEvent)
-      } else {
-        console.error(`Country with ID ${countryId} not found.`)
-      }
-    } catch (error) {
-      console.error('Error fetching country data:', error)
-    }
-  }
-})
+
 </script>
 <template>
   <div class="p-4">

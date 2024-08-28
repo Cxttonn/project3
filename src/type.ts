@@ -30,6 +30,12 @@ export interface Event {
   }
 }
 
+export interface Country {
+  id: string
+  name: string
+  description: string
+}
+
 export interface Comment {
   name: string
   text: string

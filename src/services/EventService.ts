@@ -31,14 +31,24 @@ export default {
     return event
   },
 
-  async getCountryDetails(id: string) {
-    const response = await apiClient.get(
-      `https://my-json-server.typicode.com/matchimaky/dbolympic/country`
+  async getCountryDetails() {
+    const parts = ['dbolympic', 'dbolympic2', 'dbolympic3', 'dbolympic4', 'dbolympic5']
+    const dataPromises = parts.map((part) =>
+    apiClient
+    .get(`https://my-json-server.typicode.com/matchimaky/${part}/country`)
+    .then((response) => response.data)
     )
-    const country = response.data.find((country: any) => country.id === id)
-    if (!country) {
-      throw new Error(`Country with ID ${id} not found`)
-    }
-    return country
+    const results = await Promise.all(dataPromises)
+    const allCountry = results.flat()
+    return allCountry
+},
+
+async getCountry(id: string) {
+  const countries = await this.getCountryDetails()
+  const country = countries.find((country) => country.id === id)
+  if (!country) {
+    throw new Error(`Event with ID ${id} not found`)
   }
+  return country
+},
 }
