@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
-import { useRoute, RouterLink } from 'vue-router'
+import { useRoute, RouterLink, useRouter } from 'vue-router'
 import { useEventStore } from '@/stores/event'
 import { useMessageStore } from '@/stores/message'
+import { useCommentStore } from '@/stores/comment'
 import type { Event } from '@/type'
 
 const route = useRoute()
+const router = useRouter()
 const countryId = route.params.id as string
 const eventStore = useEventStore()
 const messageStore = useMessageStore()
+const commentStore = useCommentStore()
 
 const event = computed(() => eventStore.currentEvent || eventStore.getEventById(countryId))
 const commenterName = ref('')
@@ -27,14 +30,15 @@ async function submitComment() {
     date: new Date().toLocaleString()
   }
 
-  comments.value.push(newComment)
+  // comments.value.push(newComment)
+  commentStore.addComment(newComment)
   messageStore.updateMessage('Comment successfully posted!')
 
   commenterName.value = ''
   commentText.value = ''
+
+  router.push({name: 'event-list-view', query:{pageSize: 5 , page: 1}})
 }
-
-
 </script>
 <template>
   <div class="p-4">

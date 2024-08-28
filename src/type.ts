@@ -23,10 +23,6 @@ export interface Event {
       sports: SportMedalDetails[]
       total: MedalDetails
     }
-    in_2024: {
-      sports: SportMedalDetails[]
-      total: MedalDetails
-    }
   }
 }
 

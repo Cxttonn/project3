@@ -1,12 +1,15 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
-export const useCommentStore = defineStore('commentStore', {
+export const useCommentStore = defineStore('comment', {
   state: () => ({
-    comments: [] as { name: string; text: string }[]
+    comments: [] as { name: string; text: string; date: string }[],
   }),
   actions: {
-    addComment(name: string, text: string) {
-      this.comments.push({ name, text })
+    addComment(comment: { name: string; text: string; date: string }) {
+      this.comments.push(comment);
+    },
+    getComments() {
+      return this.comments;
     }
   }
-})
+});

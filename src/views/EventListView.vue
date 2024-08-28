@@ -2,11 +2,15 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import { useMessageStore } from '@/stores/message'
 import EventService from '@/services/EventService'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute, useRouter, RouterLink } from 'vue-router'
+import { useEventStore } from '@/stores/event'
+import { useCommentStore } from '@/stores/comment'
 import { type Event } from '@/type'
 
 const route = useRoute()
 const router = useRouter()
+const eventStore = useEventStore()
+const commentStore = useCommentStore()
 const messageStore = useMessageStore()
 
 const allEvents = ref<Event[]>([])
@@ -103,20 +107,20 @@ function changePage(newPage: number) {
 <template>
   <h1 class="text-3xl font-bold text-center mb-6">Olympic Medal Table</h1>
 
-
   <table class="min-w-full table-auto border-collapse mb-6">
     <thead>
       <tr class="bg-gray-100">
         <th class="px-4 py-2 border text-center">Flag</th>
-        <th class="px-4 py-2 border text-center">Country  
+        <th class="px-4 py-2 border text-center">
+          Country
           <select
-      id="page-size"
-      v-model="pageSize"
-      @change="updatePageSize(pageSize)"
-      class="border rounded px-2 py-1"
-       >
-      <option v-for="n in [5, 10, 15, 20, 25, 30]" :key="n" :value="n">{{ n }}</option>
-      </select>
+            id="page-size"
+            v-model="pageSize"
+            @change="updatePageSize(pageSize)"
+            class="border rounded px-2 py-1"
+          >
+            <option v-for="n in [5, 10, 15, 20, 25, 30]" :key="n" :value="n">{{ n }}</option>
+          </select>
         </th>
         <th class="px-4 py-2 border text-center">Gold</th>
         <th class="px-4 py-2 border text-center">Silver</th>
@@ -139,13 +143,13 @@ function changePage(newPage: number) {
           </RouterLink>
         </td>
         <td class="px-4 py-2 border text-center">
-          {{ event.gold_medals || event.medals_by_sport?.until_2024?.total?.gold || 0 }}
+          {{ event.medals_by_sport?.until_2024?.total?.gold || 0 }}
         </td>
         <td class="px-4 py-2 border text-center">
-          {{ event.silver_medals || event.medals_by_sport?.until_2024?.total?.silver || 0 }}
+          {{ event.medals_by_sport?.until_2024?.total?.silver || 0 }}
         </td>
         <td class="px-4 py-2 border text-center">
-          {{ event.bronze_medals || event.medals_by_sport?.until_2024?.total?.bronze || 0 }}
+          {{ event.medals_by_sport?.until_2024?.total?.bronze || 0 }}
         </td>
         <td class="px-4 py-2 border text-center">{{ event.total_medals }}</td>
       </tr>
@@ -173,6 +177,11 @@ function changePage(newPage: number) {
 
     <ul class="mt-6 space-y-4">
       <li v-for="(comment, index) in comments" :key="index" class="bg-gray-100 p-4 rounded-lg">
+        <strong>{{ comment.name }}</strong> ({{ comment.date }}): {{ comment.text }}
+      </li>
+    </ul>
+    <ul class="mt-6 space-y-4">
+      <li v-for="(comment, index) in commentStore.getComments()" :key="index" class="bg-gray-100 p-4 rounded-lg">
         <strong>{{ comment.name }}</strong> ({{ comment.date }}): {{ comment.text }}
       </li>
     </ul>

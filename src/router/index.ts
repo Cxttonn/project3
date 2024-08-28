@@ -11,8 +11,6 @@ import { useEventStore } from '@/stores/event'
 import { ref } from 'vue'
 import { useMessageStore } from '@/stores/message'
 
-
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -93,4 +91,3 @@ router.afterEach(() => {
 })
 
 export default router
-
