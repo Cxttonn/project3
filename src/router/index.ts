@@ -1,22 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import EventListView from '@/views/EventListView.vue'
+import EventListView from '@/views/ListView.vue'
 import LayoutView from '@/views/event/LayoutView.vue'
 import CountryDetail from '@/views/event/CountryDetailView.vue'
 import MedalDetail from '@/views/event/MedalView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import nProgress from 'nprogress'
-import EventService from '@/services/EventService'
+import EventService from '@/services/Service'
 import { useEventStore } from '@/stores/event'
-import { ref } from 'vue'
-import { useMessageStore } from '@/stores/message'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'event-list-view',
+      name: 'list-view',
       component: EventListView,
       props: (route) => ({ page: parseInt(route.query.page?.toString() || '1') })
     },

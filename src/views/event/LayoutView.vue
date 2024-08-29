@@ -4,7 +4,6 @@ import { useRoute, RouterLink, useRouter } from 'vue-router'
 import { useEventStore } from '@/stores/event'
 import { useMessageStore } from '@/stores/message'
 import { useCommentStore } from '@/stores/comment'
-import type { Event } from '@/type'
 
 const route = useRoute()
 const router = useRouter()
@@ -30,14 +29,14 @@ async function submitComment() {
     date: new Date().toLocaleString()
   }
 
-  // comments.value.push(newComment)
+  
   commentStore.addComment(newComment)
   messageStore.updateMessage('Comment successfully posted!')
 
   commenterName.value = ''
   commentText.value = ''
 
-  router.push({name: 'event-list-view', query:{pageSize: 5 , page: 1}})
+  router.push({name: 'list-view', query:{pageSize: 5 , page: 1}})
 }
 </script>
 <template>
@@ -48,7 +47,7 @@ async function submitComment() {
         <RouterLink
           :to="{ name: 'country-detail-view', params: { id: event.id } }"
           class="text-600 hover:underline mr-4"
-          >Country Detail</RouterLink
+          >Country Detail</RouterLink   
         >
         |
         <RouterLink

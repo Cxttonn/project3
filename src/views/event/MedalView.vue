@@ -9,7 +9,7 @@ const props = defineProps<{ event: Event }>()
   <div class="p-4">
     <h2 class="text-2xl font-bold mb-4">Medal Details for {{ event.name }}</h2>
 
-    <!-- Until 2024 Medals -->
+    
     <h3 class="text-xl font-semibold mt-4 mb-2">Until 2024</h3>
     <div class="mb-4">
       <table class="w-full border-collapse">
@@ -28,7 +28,7 @@ const props = defineProps<{ event: Event }>()
             <td class="p-2 border border-gray-300">{{ sport.silver }}</td>
             <td class="p-2 border border-gray-300">{{ sport.bronze }}</td>
           </tr>
-          <!-- Total Row -->
+          
           <tr class="font-semibold bg-gray-100">
             <td class="p-2 border border-gray-300">Total</td>
             <td class="p-2 border border-gray-300">

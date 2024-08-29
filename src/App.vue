@@ -2,20 +2,28 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { useMessageStore } from './stores/message'
 import { storeToRefs } from 'pinia'
-import { ref, watch } from 'vue'
+import { ref, watch, onBeforeUnmount } from 'vue'
 
 const store = useMessageStore()
 const { message } = storeToRefs(store)
 
 const flashMessageVisible = ref(false)
 
+let timeoutId: number | undefined
+
 watch(message, (newValue) => {
-  if (newValue) {
+  if (newValue?.trim()) {
     flashMessageVisible.value = true
-    setTimeout(() => {
+    timeoutId = window.setTimeout(() => {
       flashMessageVisible.value = false
       store.resetMessage()
-    }, 3000) // Flash message will disappear after 3 seconds
+    }, 3000)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (timeoutId) {
+    clearTimeout(timeoutId)
   }
 })
 </script>
@@ -32,7 +40,7 @@ watch(message, (newValue) => {
       <div class="p-8">
         <nav>
           <RouterLink
-            :to="{ name: 'event-list-view' }"
+            :to="{ name: 'list-view' }"
             class="font-bold text-gray-800 hover:text-green-500 transition"
           >
             Home
