@@ -1,26 +1,34 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, defineProps } from 'vue';
-import { useEventStore } from '@/stores/event';
-import { type Event } from '@/type';
+import { ref, onMounted, defineProps, watchEffect } from 'vue'
+import { useEventStore } from '@/stores/event'
+import { type Event } from '@/type'
 
-const props = defineProps<{ page: number; pageSize: number }>();
+const props = defineProps<{ page: number; pageSize: number }>()
 
-const events = ref<Event[]>([]);
-const eventStore = useEventStore();
+const events = ref<Event[]>([])
+const eventStore = useEventStore()
 
 function paginateData() {
-  const start = (props.page - 1) * props.pageSize;
-  const end = start + props.pageSize;
-  events.value = eventStore.events.slice(start, end);
+  if (eventStore.events.length === 0) {
+    return;
+  }
+
+  const start = (props.page - 1) * props.pageSize
+  const end = start + props.pageSize
+  events.value = eventStore.events.slice(start, end)
 }
 
-onMounted(() => {
-  paginateData();
-});
+onMounted(async () => {
+  // Fetch events if not already loaded
+  if (eventStore.events.length === 0) {
+    await eventStore; 
+  }
+  paginateData()
+})
 
-watch([() => props.page, () => props.pageSize, eventStore.events], () => {
-  paginateData();
-});
+watchEffect(() => {
+  paginateData()
+})
 </script>
 
 <template>
